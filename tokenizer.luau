@@ -3,7 +3,8 @@
 
 local tokenizer = {}
 
-local function either(_: any) return tostring(_) or _ end
+local function either(T: any) return tostring(T) or T end
+local function canBeIndexed(T: any) local _, err = pcall(function() T[#T + 1] = 0 end) if err then return false else return true end end
 
 -- Used in the tokenizer to construct tables.
 -- @param T: table to package
@@ -11,7 +12,7 @@ local function either(_: any) return tostring(_) or _ end
 function tokenizer.construct(T: any): string
 	local result: string = ""
 	
-	if T ~= nil then
+	if T ~= nil and canBeIndexed(T) then
 		for index: any, item: any in T do
 			if result == "" then
 				result = string.format("%s:%s", either(index), either(item))
@@ -20,6 +21,7 @@ function tokenizer.construct(T: any): string
 			end
 		end
 	else
+		warn(string.format("Empty or unindexable table (Skipped parsing) [mem:%s]", T))
 		result = ""
 	end
 	
