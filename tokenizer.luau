@@ -1,5 +1,5 @@
 -- made by SirKingBinx
--- (C) 2023 - 2025 bedroom.rbxl
+-- (C) 2023 - 2026 bedroom.rbxl
 
 local tokenizer = {}
 
