@@ -11,7 +11,7 @@ local function either(T: any) return tostring(T) or T end
 function tokenizer.construct(T: any): string
 	local result: string = ""
 
-	if T ~= nil and typeof(T) == "table" then
+	if typeof(T) == "table" then
 		for index: any, item: any in T do
 			if result == "" then
 				result = string.format("%s:%s", either(index), either(item))
@@ -32,11 +32,6 @@ end
 -- @param S: string
 -- @return table Table representing S
 function tokenizer.deconstruct(S: string)
-	if typeof(S) ~= "string" then
-		print("deconstruction failed: not a string")
-		return {}
-	end
-	
 	local result = {}
 	local eacharg = string.split(S, ";")
 
